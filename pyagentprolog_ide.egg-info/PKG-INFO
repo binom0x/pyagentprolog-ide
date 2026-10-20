@@ -1,0 +1,58 @@
+Metadata-Version: 2.4
+Name: pyagentprolog-ide
+Version: 0.1.0
+Summary: Web IDE for PyAgentProlog
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: pyagentprolog>=1.0.1
+Requires-Dist: gradio>=4.0
+Provides-Extra: semantic
+Requires-Dist: pyagentprolog[semantic]; extra == "semantic"
+
+# PyAgentProlog IDE
+
+Web-IDE (Gradio) для PyAgentProlog — отдельный пакет.
+
+Возможности:
+- Редактор Prolog с подсветкой синтаксиса
+- Проверка синтаксиса
+- Запросы: Run / First / Stream / Trace
+- Визуализация дерева доказательства (HTML `<ul>/<li>`)
+- Клик по шагу → просмотр `subst_before/after`
+- Точки останова (callback в `ProofTracer.end_goal`)
+- Асинхронный стриминг решений
+- Множественные сессии
+- Управление семантической унификацией
+- Диагностика (Numba, semantic, KB)
+
+## Установка
+
+    pip install -e ../pyagentprolog       # ядро
+    pip install -e .                      # IDE
+    # или: pip install ".[semantic]"
+
+## Запуск
+
+    python -m pyagentprolog_ide
+    # или:
+    pyagentprolog-ide
+
+Открыть http://localhost:7860.
+
+## Замечание про `subst_before/after`
+
+По умолчанию `ProofTracer` не заполняет `ProofStep.subst_before/subst_after`
+(интерпретатор не передаёт подстановку). IDE в этом случае показывает
+поле `unification` (bindings головы правила) — этого достаточно,
+чтобы увидеть, какие переменные привязаны на шаге.
+
+Если нужны полные before/after, добавьте в `prolog/interpreter.py`
+(2 строки, обратно совместимо) после:
+
+    trace_step = self.tracer.start_goal(goal_str, frame.depth)
+
+строку:
+
+    self.tracer.set_substitutions(frame.subst, new_subst)
+
+IDE автоматически подхватит.

@@ -1,0 +1,5 @@
+pyagentprolog>=1.0.1
+gradio>=4.0
+
+[semantic]
+pyagentprolog[semantic]

@@ -1,0 +1,2 @@
+[console_scripts]
+pyagentprolog-ide = pyagentprolog_ide.__main__:main

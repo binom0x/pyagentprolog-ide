@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+pyagentprolog_ide/__init__.py
+pyagentprolog_ide/__main__.py
+pyagentprolog_ide/app.py
+pyagentprolog_ide/breakpoints.py
+pyagentprolog_ide/examples.py
+pyagentprolog_ide/sessions.py
+pyagentprolog_ide/streaming.py
+pyagentprolog_ide/tree_view.py
+pyagentprolog_ide.egg-info/PKG-INFO
+pyagentprolog_ide.egg-info/SOURCES.txt
+pyagentprolog_ide.egg-info/dependency_links.txt
+pyagentprolog_ide.egg-info/entry_points.txt
+pyagentprolog_ide.egg-info/requires.txt
+pyagentprolog_ide.egg-info/top_level.txt
