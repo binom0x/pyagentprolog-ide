@@ -1,16 +1,10 @@
-# `README.md`
-
-```markdown
 # PyAgentProlog IDE
-
-Web-based IDE for [PyAgentProlog](https://github.com/…/pyagentprolog) — a
-pure-Python Prolog engine with agents, tracing and semantic unification.
+> Web-based IDE for [PyAgentProlog](https://github.com/…/pyagentprolog) — a
+> pure-Python Prolog engine with agents, tracing and semantic unification.
 
 The IDE is a **separate package** (`pyagentprolog-ide`) that depends on the
 core `pyagentprolog` and `gradio`. The core library knows nothing about the
 IDE; the dependency is strictly one-way.
-
-![screenshot placeholder](docs/screenshot.png)
 
 ## Features
 
