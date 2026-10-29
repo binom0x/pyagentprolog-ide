@@ -47,8 +47,6 @@ def code_language() -> str:
 
 
 # ---------- Тема ----------
-# Одна тёмная тема для всех версий Gradio 4/5/6.
-# Soft() с dark-параметрами работает во всех ветках.
 def dark_theme():
     """Тёмная тема для gr.Blocks/launch."""
     return gr.themes.Soft(
@@ -86,13 +84,28 @@ def dark_theme():
     )
 
 
-def blocks_kwargs() -> dict:
-    if _GRADIO_MAJOR >= 6:
-        return {"title": "PyAgentProlog IDE"}
-    return {"title": "PyAgentProlog IDE", "theme": dark_theme()}
+# ---------- Blocks / launch kwargs ----------
+# В Gradio 4/5 theme и css передаются в Blocks();
+# в Gradio 6 — в launch(). CSS опционален: если передан — идёт туда же,
+# где и theme, в зависимости от версии.
+
+def blocks_kwargs(css: str = "", head: str = "") -> dict:
+    d = {"title": "PyAgentProlog IDE"}
+    if _GRADIO_MAJOR < 6:
+        d["theme"] = dark_theme()
+        if css:
+            d["css"] = css
+        if head:
+            d["head"] = head
+    return d
 
 
-def launch_kwargs() -> dict:
+def launch_kwargs(css: str = "", head: str = "") -> dict:
+    d = {}
     if _GRADIO_MAJOR >= 6:
-        return {"theme": dark_theme()}
-    return {}
+        d["theme"] = dark_theme()
+        if css:
+            d["css"] = css
+        if head:
+            d["head"] = head
+    return d

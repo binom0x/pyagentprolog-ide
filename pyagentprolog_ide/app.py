@@ -132,8 +132,229 @@ button.tiny-btn, .tiny-btn button {
     align-items: center !important;
 }
 .tiny-row > * { min-width: 0 !important; }
+
+/* ===================================================================
+   gr.Dataframe — тёмная тема (шаги, subst и любые другие Dataframes)
+   Покрывает: Gradio 4/5 (HTML <table>) и Gradio 6 (role="grid").
+   =================================================================== */
+
+/* --- Контейнеры --- */
+.gradio-dataframe,
+.gradio-dataframe > div,
+.gradio-dataframe .table-wrap,
+.gradio-dataframe .wrap {
+    background-color: #0b0d11 !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+}
+
+/* --- HTML <table> (Gradio 4/5) --- */
+.gradio-dataframe table {
+    background-color: #0b0d11 !important;
+    color: #e6e6e6 !important;
+    border-collapse: collapse !important;
+    border-color: #2a313d !important;
+}
+.gradio-dataframe thead,
+.gradio-dataframe thead tr {
+    background-color: #1c212a !important;
+}
+.gradio-dataframe th {
+    background-color: #1c212a !important;
+    color: #c7cbd1 !important;
+    border-color: #2a313d !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 3px 6px !important;
+}
+.gradio-dataframe tbody,
+.gradio-dataframe tbody tr {
+    background-color: #0b0d11 !important;
+}
+.gradio-dataframe td {
+    background-color: #0b0d11 !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+    font-size: 11px !important;
+    padding: 3px 6px !important;
+}
+.gradio-dataframe tbody tr:hover td,
+.gradio-dataframe tbody tr:hover {
+    background-color: #161a20 !important;
+}
+
+/* --- ARIA-grid (Gradio 6) --- */
+.gradio-dataframe [role="grid"],
+.gradio-dataframe [role="row"],
+.gradio-dataframe [role="rowgroup"],
+.gradio-dataframe [role="gridcell"] {
+    background-color: #0b0d11 !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+}
+.gradio-dataframe [role="columnheader"] {
+    background-color: #1c212a !important;
+    color: #c7cbd1 !important;
+    border-color: #2a313d !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+.gradio-dataframe [role="gridcell"] {
+    font-size: 11px !important;
+    padding: 3px 6px !important;
+}
+.gradio-dataframe [role="row"]:hover [role="gridcell"] {
+    background-color: #161a20 !important;
+}
+
+/* --- Выделенная / сфокусированная ячейка --- */
+.gradio-dataframe td.selected,
+.gradio-dataframe [role="gridcell"][aria-selected="true"] {
+    background-color: #2a313d !important;
+    color: #ffffff !important;
+}
+
+/* --- Редактируемые input/textarea внутри ячеек (на всякий случай) --- */
+.gradio-dataframe input,
+.gradio-dataframe textarea,
+.gradio-dataframe select {
+    background-color: #0f1115 !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+}
+
+/* --- Скроллбар внутри таблицы --- */
+.gradio-dataframe ::-webkit-scrollbar { width: 8px; height: 8px; }
+.gradio-dataframe ::-webkit-scrollbar-thumb { background: #2a313d; border-radius: 5px; }
+.gradio-dataframe ::-webkit-scrollbar-track { background: transparent; }
 """
 
+# =====================================================================
+# Дополнительный CSS через <head> — страховка для gr.Dataframe.
+# Инжектируется в <head> страницы отдельно от launch(css=...).
+# =====================================================================
+_HEAD_DARK = """
+<style>
+/* ---- CSS-переменные Gradio, на которые реагирует таблица ---- */
+:root, body, .gradio-container {
+    --table-odd-background-fill: #0b0d11;
+    --table-even-background-fill: #0b0d11;
+    --table-row-focus: #161a20;
+    --table-border-color: #2a313d;
+    --table-radius: 4px;
+    --color-accent-soft: #2a313d;
+    --block-background-fill: #161a20;
+    --background-fill-primary: #0b0d11;
+    --background-fill-secondary: #0b0d11;
+    --border-color-primary: #2a313d;
+    --body-text-color: #e6e6e6;
+}
+
+/* ---- Агрессивный бланкет по всему Dataframe ---- */
+.gradio-dataframe,
+.gradio-dataframe *,
+.gradio-dataframe *::before,
+.gradio-dataframe *::after,
+[class*="dataframe"],
+[class*="dataframe"] *,
+[class*="dataframe"] *::before,
+[class*="dataframe"] *::after,
+[data-testid="dataframe"],
+[data-testid="dataframe"] * {
+    background: #0b0d11 !important;
+    background-color: #0b0d11 !important;
+    background-image: none !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+}
+
+/* ---- Заголовки (перекрываем бланкет выше) ---- */
+.gradio-dataframe thead,
+.gradio-dataframe thead *,
+.gradio-dataframe thead *::before,
+.gradio-dataframe thead *::after,
+.gradio-dataframe th,
+.gradio-dataframe [role="columnheader"],
+.gradio-dataframe [role="columnheader"] *,
+.gradio-dataframe [role="rowgroup"]:first-child,
+.gradio-dataframe [role="rowgroup"]:first-child *,
+[class*="dataframe"] thead,
+[class*="dataframe"] thead *,
+[class*="dataframe"] th,
+[class*="dataframe"] [role="columnheader"],
+[class*="dataframe"] [role="columnheader"] *,
+[data-testid="dataframe"] thead *,
+[data-testid="dataframe"] [role="columnheader"] {
+    background: #1c212a !important;
+    background-color: #1c212a !important;
+    color: #c7cbd1 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+/* ---- Ячейки ---- */
+.gradio-dataframe td,
+.gradio-dataframe [role="cell"],
+.gradio-dataframe [role="gridcell"],
+[class*="dataframe"] td,
+[class*="dataframe"] [role="cell"],
+[class*="dataframe"] [role="gridcell"] {
+    font-size: 11px !important;
+    padding: 3px 6px !important;
+}
+
+/* ---- Hover ---- */
+.gradio-dataframe [role="row"]:hover,
+.gradio-dataframe [role="row"]:hover *,
+.gradio-dataframe tr:hover,
+.gradio-dataframe tr:hover *,
+[class*="dataframe"] [role="row"]:hover *,
+[class*="dataframe"] tr:hover * {
+    background: #161a20 !important;
+    background-color: #161a20 !important;
+}
+
+/* ---- Selected ---- */
+.gradio-dataframe td.selected,
+.gradio-dataframe [role="cell"][aria-selected="true"],
+.gradio-dataframe [role="gridcell"][aria-selected="true"],
+[class*="dataframe"] td.selected,
+[class*="dataframe"] [aria-selected="true"] {
+    background: #2a313d !important;
+    color: #ffffff !important;
+}
+
+/* ---- Input внутри ячеек (на случай interactive) ---- */
+.gradio-dataframe input,
+.gradio-dataframe textarea,
+[class*="dataframe"] input,
+[class*="dataframe"] textarea {
+    background: #0f1115 !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+}
+
+#steps_df,
+#steps_df *,
+#subst_df,
+#subst_df * {
+    background: #0b0d11 !important;
+    background-color: #0b0d11 !important;
+    color: #e6e6e6 !important;
+    border-color: #2a313d !important;
+}
+#steps_df thead,
+#steps_df thead *,
+#steps_df [role="columnheader"],
+#subst_df thead,
+#subst_df thead *,
+#subst_df [role="columnheader"] {
+    background: #1c212a !important;
+    background-color: #1c212a !important;
+    color: #c7cbd1 !important;
+}
+</style>
+"""
 
 # =====================================================================
 # Утилиты
@@ -242,6 +463,39 @@ def _pick_pl_file(initial: str = "",
         print(f"[_pick_pl_file] {e}")
         return None
 
+_DEFAULT_FAVICON_SVG = (
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
+    '<rect width="64" height="64" rx="12" fill="#4f46e5"/>'
+    '<text x="32" y="46" font-family="ui-sans-serif,system-ui,sans-serif" '
+    'font-size="40" font-weight="700" fill="#ffffff" '
+    'text-anchor="middle" dominant-baseline="middle">P</text>'
+    '</svg>'
+)
+
+
+def _ensure_favicon() -> Optional[str]:
+    """Возвращает путь к favicon.
+
+    Ищет favicon.{png,ico,svg} в корне пакета или в подпапке assets/.
+    Если файла нет — генерирует дефолтный SVG в корне пакета,
+    чтобы не зависеть от внешних ресурсов.
+    """
+    here = os.path.dirname(os.path.abspath(__file__))
+    for subdir in ("", "assets"):
+        for name in ("favicon.png", "favicon.ico", "favicon.svg"):
+            path = os.path.join(here, subdir, name) if subdir \
+                else os.path.join(here, name)
+            if os.path.isfile(path):
+                return path
+    # ничего нет — создаём дефолтный SVG
+    try:
+        path = os.path.join(here, "favicon.svg")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(_DEFAULT_FAVICON_SVG)
+        return path
+    except OSError as e:
+        print(f"[favicon] cannot write default: {e}")
+        return None
 
 # =====================================================================
 # PrologIDE
@@ -1133,7 +1387,7 @@ def handle_diag(sid):
 # UI
 # =====================================================================
 def build_ui() -> gr.Blocks:
-    with gr.Blocks(**blocks_kwargs(), css=_GLOBAL_CSS) as ui:
+    with gr.Blocks(**blocks_kwargs(_GLOBAL_CSS, _HEAD_DARK)) as ui:
         session_state = gr.State(None)
         steps_state = gr.State([])
 
@@ -1402,6 +1656,7 @@ def build_ui() -> gr.Blocks:
                     interactive=False,
                     wrap=True,
                     label="",
+                    elem_id="steps_df",
                 )
                 gr.Markdown("**subst**")
                 subst_df = gr.Dataframe(
@@ -1411,6 +1666,7 @@ def build_ui() -> gr.Blocks:
                     interactive=False,
                     wrap=True,
                     label="",
+                    elem_id="subst_df",
                 )
 
         # ================ Wiring ================
@@ -1554,11 +1810,19 @@ def build_ui() -> gr.Blocks:
 def launch(share: bool = False, host: str = "127.0.0.1",
            port: int = 7860, **kwargs) -> None:
     ui = build_ui()
-    ui.launch(
+
+    kw = dict(
         share=share,
         server_name=host,
         server_port=port,
-        **launch_kwargs(),
-        **kwargs,
         inbrowser=True,
     )
+
+    favicon = _ensure_favicon()
+    if favicon:
+        kw["favicon_path"] = favicon
+
+    kw.update(launch_kwargs(_GLOBAL_CSS, _HEAD_DARK))
+    kw.update(kwargs)
+
+    ui.launch(**kw)
