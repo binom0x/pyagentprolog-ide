@@ -19,6 +19,7 @@ pyagentprolog_ide.egg-info/requires.txt
 pyagentprolog_ide.egg-info/top_level.txt
 pyagentprolog_ide/examples/breakpoints/kb.pl
 pyagentprolog_ide/examples/cut_ite/kb.pl
+pyagentprolog_ide/examples/diagnostics/kb.pl
 pyagentprolog_ide/examples/factorial/kb.pl
 pyagentprolog_ide/examples/family/kb.pl
 pyagentprolog_ide/examples/lists/kb.pl
