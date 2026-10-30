@@ -1,10 +1,13 @@
+LICENSE
 README.md
 pyproject.toml
 pyagentprolog_ide/__init__.py
 pyagentprolog_ide/__main__.py
+pyagentprolog_ide/_gradio_compat.py
+pyagentprolog_ide/actions_ctx.py
 pyagentprolog_ide/app.py
 pyagentprolog_ide/breakpoints.py
-pyagentprolog_ide/examples.py
+pyagentprolog_ide/project.py
 pyagentprolog_ide/sessions.py
 pyagentprolog_ide/streaming.py
 pyagentprolog_ide/tree_view.py
@@ -14,3 +17,9 @@ pyagentprolog_ide.egg-info/dependency_links.txt
 pyagentprolog_ide.egg-info/entry_points.txt
 pyagentprolog_ide.egg-info/requires.txt
 pyagentprolog_ide.egg-info/top_level.txt
+pyagentprolog_ide/examples/breakpoints/kb.pl
+pyagentprolog_ide/examples/cut_ite/kb.pl
+pyagentprolog_ide/examples/factorial/kb.pl
+pyagentprolog_ide/examples/family/kb.pl
+pyagentprolog_ide/examples/lists/kb.pl
+pyagentprolog_ide/examples/semantic/kb.pl
